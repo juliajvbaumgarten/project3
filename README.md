@@ -3,6 +3,7 @@ Author: Lauren Sdun, Julia Jones, Julia Baumgarten
 
 **Overall layout**
 
+```python
 blackbody_mcmc/
     pyproject.toml / setup.cfg
     src/
@@ -18,7 +19,7 @@ blackbody_mcmc/
     tests/
         test_model.py
         test_mcmc.py
-
+```
 
 **Physics and statistics**
 
