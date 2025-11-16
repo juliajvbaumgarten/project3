@@ -39,6 +39,26 @@ def planck_lambda(wavelength: np.ndarray, temperature: float) -> np.ndarray:
 
 
 
+def model_intensity(
+    wavelength: np.ndarray,
+    theta: Sequence[float],
+) -> np.ndarray:
+    """
+    Model intensity including a calibration factor
+    Parameters
+    ----------
+    wavelength : ndarray
+        Wavelength in meters
+    theta : sequence of float
+        Model parameters (T, A), where T is temperature [K], A is amplitude
+    Returns
+    -------
+    ndarray
+        Model intensities
+    """
+    T, A = theta
+    return A * planck_lambda(wavelength, T)
+
 
 
 
