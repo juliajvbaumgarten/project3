@@ -35,10 +35,37 @@ def autocorrelation(chain: np.ndarray, max_lag: int | None = None) -> np.ndarray
     return acf
 
 
+def gelman_rubin(chains: Iterable[np.ndarray]) -> np.ndarray:
+    """
+    Computes Gelman-Rubin R-hat statistic for multiple chains
+    Parameters
+    ----------
+    chains : iterable of ndarray
+        Each chain is (n_samples, n_params)
+    Returns
+    -------
+    ndarray
+        R-hat values for each parameter
+    """
+    chains = [np.asarray(c) for c in chains]
+    m = len(chains)
+    if m < 2:
+        raise ValueError("Need at least two chains for Gelman-Rubin.")
 
+    n, n_params = chains[0].shape
+    for c in chains:
+        if c.shape != (n, n_params):
+            raise ValueError("All chains must have same shape")
 
+    chain_means = np.array([c.mean(axis=0) for c in chains])  # (m, p)
+    chain_vars = np.array([c.var(axis=0, ddof=1) for c in chains])  # (m, p)
 
+    B = n * chain_means.var(axis=0, ddof=1)
+    W = chain_vars.mean(axis=0)
 
+    var_hat = (n - 1) / n * W + B / n
+    R_hat = np.sqrt(var_hat / W)
+    return R_hat
 
 
 
