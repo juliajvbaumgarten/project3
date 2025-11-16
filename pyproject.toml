@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "blackbody_mcmc"
+version = "0.1.0"
+description = "Bayesian MCMC fit of blackbody radiation using Planck's law"
+authors = [
+    {name = "Lauren Sdun"},
+    {name = "Julia Jones"},
+    {name = "Julia Baumgarten"}
+]
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "numpy",
+    "scipy",
+    "matplotlib",
+    "emcee"
+]
+
+[project.scripts]
+blackbody-mcmc = "blackbody_mcmc.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
