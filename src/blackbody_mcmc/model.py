@@ -60,6 +60,28 @@ def model_intensity(
     return A * planck_lambda(wavelength, T)
 
 
+def log_prior(theta: Sequence[float]) -> float:
+    """
+    Log prior probability for parameters
+    Parameters
+    ----------
+    theta : sequence of float
+        Parameters (T, A)
+    Returns
+    -------
+    float
+        Log prior probability
+    """
+    T, A = theta
+    
+    if T <= 500 or T >= 10000:
+        return -np.inf
+    if A <= 0:
+        return -np.inf
+
+    return 0.0
+
+
 
 
 
