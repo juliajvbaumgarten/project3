@@ -110,6 +110,32 @@ def log_likelihood(
     return -0.5 * np.sum(resid**2 + np.log(2.0 * np.pi * sigma**2))
 
 
+def log_posterior(
+    theta: Sequence[float],
+    wavelength: np.ndarray,
+    intensity: np.ndarray,
+    sigma: np.ndarray,
+) -> float:
+    """
+    Log posterior up to a normalisation constant
+    Parameters
+    ----------
+    theta : sequence of float
+        Parameters (T, A)
+    wavelength, intensity, sigma : ndarray
+        Data and uncertainties
+    Returns
+    -------
+    float
+        Log posterior
+    """
+    lp = log_prior(theta)
+    if not np.isfinite(lp):
+        return -np.inf
+    return lp + log_likelihood(theta, wavelength, intensity, sigma)
+
+
+
 
 
 
